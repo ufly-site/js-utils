@@ -81,3 +81,35 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+
+//切割，获取特定数字
+export  function split(fromArray,count){
+    var numNow = 0;
+    var status = false;
+    var w = fromArray[0].length;
+    for(var k=0;k<w;k++) {//遍历图像
+        var sumUp = 0;
+        for (var j=0;j<fromArray.length;j++) //检测整列是否有图像
+            sumUp += fromArray[j][k];
+        if(sumUp == 0){//切割
+            for (j=0;j<fromArray.length-1;j++)
+                fromArray[j].remove(k);
+            w --;
+            k --;
+            status = false;
+            continue;
+        }
+        else{//切换状态
+            if(!status)
+                numNow ++;
+            status = true;
+        }
+        if(numNow!=count){//不是想要的数字
+            for (j=0;j<fromArray.length-1;j++)
+                fromArray[j].remove(k);
+            w --;
+            k --;
+        }
+    }
+    return fromArray;
+}
